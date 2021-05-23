@@ -79,11 +79,11 @@ const roomSchema = new mongoose.Schema({
   },
   reviews: [
     {
-      //   user: {
-      //     type: mongoose.Schema.ObjectId,
-      //     ref: 'User',
-      //     required: true,
-      //   },
+      user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true,
+      },
       name: {
         type: String,
         required: true,
@@ -98,11 +98,11 @@ const roomSchema = new mongoose.Schema({
       },
     },
   ],
-  //   user: {
-  //     type: mongoose.Schema.ObjectId,
-  //     ref: 'User',
-  //     required: false,
-  //   },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: false,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
