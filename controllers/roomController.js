@@ -4,7 +4,12 @@ const Room = require('../models/room');
 // @desc    Create new Room
 // @access  Public
 const allRooms = async (req, res) => {
-  res.status(200).json({ success: true, message: 'All Rooms' });
+  try {
+    const rooms = await Room.find({});
+    res.status(200).json({ success: true, count: rooms.length, rooms });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
 };
 
 // @route   POST /api/rooms
