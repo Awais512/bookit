@@ -13,7 +13,7 @@ const createRoom = async (req, res) => {
 };
 
 // @route   GET /api/rooms
-// @desc    Create new Room
+// @desc    Fetch all Rooms
 // @access  Public
 const allRooms = async (req, res) => {
   try {
@@ -25,7 +25,7 @@ const allRooms = async (req, res) => {
 };
 
 // @route   GET /api/rooms/:id
-// @desc    Create new Room
+// @desc    Get Single Room
 // @access  Public
 const getRoom = async (req, res) => {
   try {
@@ -41,9 +41,9 @@ const getRoom = async (req, res) => {
   }
 };
 
-// @route   GET /api/rooms/:id
-// @desc    Create new Room
-// @access  Public
+// @route   PUT /api/rooms/:id
+// @desc    UPDATE  Room
+// @access  PRIVATE
 const updateRoom = async (req, res) => {
   try {
     let room = await Room.findById(req.query.id);
@@ -63,4 +63,24 @@ const updateRoom = async (req, res) => {
   }
 };
 
-export { allRooms, createRoom, getRoom, updateRoom };
+// @route   DELETE /api/rooms/:id
+// @desc    Delete  Room
+// @access  PRIVATE
+const deleteRoom = async (req, res) => {
+  try {
+    const room = await Room.findById(req.query.id);
+    if (!room) {
+      return res
+        .status(404)
+        .json({ success: false, message: 'Room does not exist' });
+    }
+    await Room.remove();
+    res
+      .status(200)
+      .json({ success: true, message: 'Room was successfully removed' });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+export { allRooms, createRoom, getRoom, updateRoom, deleteRoom };
