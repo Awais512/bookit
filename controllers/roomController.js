@@ -32,7 +32,7 @@ const getRoom = catchAsync(async (req, res, next) => {
 // @route   PUT /api/rooms/:id
 // @desc    UPDATE  Room
 // @access  PRIVATE
-const updateRoom = catchAsync(async (req, res) => {
+const updateRoom = catchAsync(async (req, res, next) => {
   let room = await Room.findById(req.query.id);
   if (!room) {
     return next(new ErrorHandler('Room does not exist', 404));
@@ -48,7 +48,7 @@ const updateRoom = catchAsync(async (req, res) => {
 // @route   DELETE /api/rooms/:id
 // @desc    Delete  Room
 // @access  PRIVATE
-const deleteRoom = catchAsync(async (req, res) => {
+const deleteRoom = catchAsync(async (req, res, next) => {
   const room = await Room.findById(req.query.id);
   if (!room) {
     return next(new ErrorHandler('Room does not exist', 404));
