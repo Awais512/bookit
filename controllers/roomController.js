@@ -1,6 +1,7 @@
 import Room from '../models/room';
 import ErrorHandler from '../utils/errorHandler';
 import catchAsync from '../middlewares/catchAsyncErrors';
+import APIFeatures from '../utils/apiFeatures';
 
 // @route   POST /api/rooms
 // @desc    Create new Room
@@ -14,7 +15,8 @@ const createRoom = catchAsync(async (req, res, next) => {
 // @desc    Fetch all Rooms
 // @access  Public
 const allRooms = catchAsync(async (req, res, next) => {
-  const rooms = await Room.find({});
+  const apiFeatures = new APIFeatures(Room.find(), req.query).search();
+  const rooms = await apiFeatures.query;
   res.status(200).json({ success: true, count: rooms.length, rooms });
 });
 
