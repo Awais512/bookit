@@ -1,9 +1,10 @@
-const Room = require('../models/room');
+import Room from '../models/room';
+import ErrorHandler from '../utils/errorHandler';
 
 // @route   POST /api/rooms
 // @desc    Create new Room
 // @access  Private
-const createRoom = async (req, res) => {
+const createRoom = async (req, res, next) => {
   try {
     const room = await Room.create(req.body);
     res.status(200).json({ success: true, room });
@@ -15,7 +16,7 @@ const createRoom = async (req, res) => {
 // @route   GET /api/rooms
 // @desc    Fetch all Rooms
 // @access  Public
-const allRooms = async (req, res) => {
+const allRooms = async (req, res, next) => {
   try {
     const rooms = await Room.find({});
     res.status(200).json({ success: true, count: rooms.length, rooms });
@@ -27,13 +28,11 @@ const allRooms = async (req, res) => {
 // @route   GET /api/rooms/:id
 // @desc    Get Single Room
 // @access  Public
-const getRoom = async (req, res) => {
+const getRoom = async (req, res, next) => {
   try {
     const room = await Room.findById(req.query.id);
     if (!room) {
-      return res
-        .status(404)
-        .json({ success: false, message: 'Room does not exist' });
+      return next(new ErrorHandler('Room does not exist', 404));
     }
     res.status(200).json({ success: true, room });
   } catch (error) {
@@ -48,9 +47,7 @@ const updateRoom = async (req, res) => {
   try {
     let room = await Room.findById(req.query.id);
     if (!room) {
-      return res
-        .status(404)
-        .json({ success: false, message: 'Room does not exist' });
+      return next(new ErrorHandler('Room does not exist', 404));
     }
     room = await Room.findByIdAndUpdate(req.query.id, req.body, {
       new: true,
@@ -70,9 +67,7 @@ const deleteRoom = async (req, res) => {
   try {
     const room = await Room.findById(req.query.id);
     if (!room) {
-      return res
-        .status(404)
-        .json({ success: false, message: 'Room does not exist' });
+      return next(new ErrorHandler('Room does not exist', 404));
     }
     await Room.remove();
     res
