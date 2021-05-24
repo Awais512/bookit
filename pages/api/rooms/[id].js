@@ -6,7 +6,9 @@ import {
   deleteRoom,
 } from '../../../controllers/roomController';
 
-const handler = nc();
+import onError from '../../../middlewares/errors';
+
+const handler = nc({ onError });
 
 dbConnect();
 
