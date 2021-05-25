@@ -15,9 +15,25 @@ const createRoom = catchAsync(async (req, res, next) => {
 // @desc    Fetch all Rooms
 // @access  Public
 const allRooms = catchAsync(async (req, res, next) => {
-  const apiFeatures = new APIFeatures(Room.find(), req.query).search();
-  const rooms = await apiFeatures.query;
-  res.status(200).json({ success: true, count: rooms.length, rooms });
+  const resPerPage = 4;
+
+  const roomsCount = await Room.countDocuments();
+
+  const apiFeatures = new APIFeatures(Room.find(), req.query).search().filter();
+
+  let rooms = await apiFeatures.query;
+  let filteredRoomsCount = rooms.length;
+
+  apiFeatures.pagination(resPerPage);
+  rooms = await apiFeatures.query;
+
+  res.status(200).json({
+    success: true,
+    roomsCount,
+    resPerPage,
+    filteredRoomsCount,
+    rooms,
+  });
 });
 
 // @route   GET /api/rooms/:id
