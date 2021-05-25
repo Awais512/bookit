@@ -11,6 +11,7 @@ export const getRooms = (req) => async (dispatch) => {
   try {
     const { origin } = absoluteUrl(req);
     const { data } = await axios.get(`${origin}/api/rooms`);
+
     dispatch({
       type: ALL_ROOMS_SUCCESS,
       payload: data,
@@ -24,7 +25,7 @@ export const getRooms = (req) => async (dispatch) => {
 };
 
 //Clear Errors
-export const getRooms = () => async (dispatch) => {
+export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
