@@ -39,7 +39,7 @@ const RoomDetails = () => {
         <title>{name} - BookIT</title>
       </Head>
       <div className='container container-fluid'>
-        <h2 className='mt-5'>{name}.(one)</h2>
+        <h2 className='mt-5'>{name}</h2>
         <p>{address}</p>
 
         <div className='ratings mt-auto mb-3'>
