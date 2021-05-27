@@ -9,22 +9,26 @@ import axios from 'axios';
 import absoluteUrl from 'next-absolute-url';
 
 //Get all rooms
-export const getRooms = (req) => async (dispatch) => {
-  try {
-    const { origin } = absoluteUrl(req);
-    const { data } = await axios.get(`${origin}/api/rooms`);
+export const getRooms =
+  (req, currentPage = 1) =>
+  async (dispatch) => {
+    try {
+      const { origin } = absoluteUrl(req);
+      const { data } = await axios.get(
+        `${origin}/api/rooms?page=${currentPage}`
+      );
 
-    dispatch({
-      type: ALL_ROOMS_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ALL_ROOMS_FAILED,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: ALL_ROOMS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ALL_ROOMS_FAILED,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 //Get room details
 export const getRoomDetails = (req, id) => async (dispatch) => {
