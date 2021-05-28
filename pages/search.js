@@ -2,7 +2,7 @@ import React from 'react';
 import Search from '../components/Search';
 import Layout from '../components/layout/Layout';
 
-const search = () => {
+const SearchPage = () => {
   return (
     <Layout title='Search Rooms'>
       <Search />
@@ -10,4 +10,4 @@ const search = () => {
   );
 };
 
-export default search;
+export default SearchPage;
