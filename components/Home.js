@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RoomItem from './room/RoomItem';
 import { toast } from 'react-toastify';
-import { clearErrors } from '../redux/actions/roomAction';
+import { clearErrors } from '../redux/actions/roomActions';
 import Pagination from 'react-js-pagination';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
